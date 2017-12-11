@@ -19,3 +19,7 @@ Example of an API call to get a 5-day forecast for 37201:
 ```
 api.openweathermap.org/data/2.5/weather?zip=37201&APPID=1111111111
 ```
+
+### Credit
+
+[Climacons](http://adamwhitcroft.com/climacons/) by [Adam Whitcroft](https://twitter.com/AdamWhitcroft)

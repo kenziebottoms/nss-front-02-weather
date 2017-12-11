@@ -1,0 +1,8 @@
+#forecast {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    h3 {
+        font-size: 1.3rem;
+    }
+}
