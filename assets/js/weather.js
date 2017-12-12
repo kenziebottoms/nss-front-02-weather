@@ -2,17 +2,22 @@
 
 const api_key = require("./api_key");
 
+const viewer = require("./view");
+
 const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 module.exports.getWeather = term => {
     let request = new XMLHttpRequest();
     request.open("GET", `http://api.wunderground.com/api/${api_key}/hourly/q/${term}.json`);
-    request.addEventListener("load", displayWeather);
+    request.addEventListener("load", parseWeather);
     request.send();
 };
 
-const displayWeather = () => {
+const parseWeather = () => {
     let data = JSON.parse(event.target.responseText);
-    let results = data.response.results;
-    console.log(results);
+    if (data.hourly_forecast) {
+        viewer.displayHourlyForecast(data.hourly_forecast);
+    } else {
+        viewer.displayError("Please enter a more specific location value. (Try adding a state.)");
+    }
 };

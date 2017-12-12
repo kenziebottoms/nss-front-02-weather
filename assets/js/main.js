@@ -2,4 +2,4 @@
 
 const weather = require("./weather");
 
-weather.getWeather("Nashville");
+weather.getWeather("Nashville TN");
