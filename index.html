@@ -16,15 +16,15 @@
     <div class="container my-3">
         <h1>WeatherUnderground API Search Tool</h1>
         <div class="input-group my-4">
-            <input type="text" class="form-control" placeholder="Zip code" id="zip">
+            <input type="text" class="form-control" placeholder="City, ST" id="location">
             <div class="input-group-btn">
                 <button type="button" id="forecastTypeDropdown" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Forecast type
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" value="hourly" href="#">Hourly</a>
-                    <a class="dropdown-item" value="3" href="#">3-day</a>
-                    <a class="dropdown-item" value="10" href="#">10-day</a>
+                    <a class="dropdown-item" data-type="hourly" href="#">Hourly</a>
+                    <a class="dropdown-item" data-type="3" href="#">3-day</a>
+                    <a class="dropdown-item" data-type="10" href="#">10-day</a>
                 </div>
             </div>
         </div>

@@ -21,8 +21,8 @@ const forecastTypes = {
 };
 
 const getForecast = (type, term) => {
+    viewer.hideErrors();
     let promise = forecastTypes[type](term);
-    console.log(promise);
     promise.then(
         viewer.displayForecast,
         viewer.displayError

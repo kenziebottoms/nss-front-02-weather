@@ -1,5 +1,7 @@
 "use strict";
 
-let weather = require("./weather");
+const weather = require("./weather");
+const events = require("./events");
 
 weather.getForecast("3", "Nashville TN");
+events.activateDropdown();

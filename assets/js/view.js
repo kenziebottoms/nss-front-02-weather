@@ -3,7 +3,12 @@
 const displayError = string => {
     let errorDiv = document.getElementById("errors");
     errorDiv.innerHTML = string;
-    errorDiv.style("display", "block");
+    errorDiv.style.display = "block";
+};
+const hideErrors = () => {
+    let errorDiv = document.getElementById("errors");
+    errorDiv.innerHTML = "";
+    errorDiv.style.display = "none";
 };
 
 const displayForecast = (meta) => {
@@ -14,12 +19,16 @@ const displayForecast = (meta) => {
 };
 
 const displayThreeDayForecast = data => {
-    let textForecast = data.forecast.txt_forecast;
-    let forecastDiv = document.getElementById("forecast");
-    textForecast.forecastday.forEach(day => {
-        let card = getCard(day.icon_url, day.title, '', day.fcttext);
-        forecastDiv.innerHTML += card;
-    });
+    if (data.forecast) {
+        let textForecast = data.forecast.txt_forecast;
+        let forecastDiv = document.getElementById("forecast");
+        textForecast.forecastday.forEach(day => {
+            let card = getCard(day.icon_url, day.title, '', day.fcttext);
+            forecastDiv.innerHTML += card;
+        });
+    } else if (data.response.results) {
+        displayError("Please be a little more specific. Try adding a state.");
+    }
 };
 
 const getCard = (img, title, subtitle, body) => {
@@ -38,4 +47,4 @@ let forecastTypes = {
     "3": displayThreeDayForecast,
 };
 
-module.exports = {displayError, displayForecast};
+module.exports = {displayError, displayForecast, hideErrors};
