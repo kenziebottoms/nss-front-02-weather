@@ -1,6 +1,6 @@
 ## Whither the Weather?
 
-### Use the ~~OpenWeather~~ Weather Underground API to build a weather forecast search tool
+### :white_check_mark: Use the ~~OpenWeather~~ Weather Underground API to build a weather forecast search tool
 
 - [x] Pick three types of forecasts to choose from.
 - [x] User inputs zipcode and selects forecast type from a dropdown.

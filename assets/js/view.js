@@ -1,5 +1,14 @@
 "use strict";
 
+// smart forecast display
+const displayForecast = (meta) => {
+    let type = meta[0];
+    let data = JSON.parse(meta[1]);
+    let forecast = data;
+    displayForecastTypes[type](data);
+};
+
+// errors
 const displayError = string => {
     let errorDiv = document.getElementById("errors");
     errorDiv.innerHTML = string;
@@ -11,13 +20,22 @@ const hideErrors = () => {
     errorDiv.style.display = "none";
 };
 
-const displayForecast = (meta) => {
-    let type = meta[0];
-    let data = JSON.parse(meta[1]);
-    let forecast = data;
-    displayForecastTypes[type](data);
+// forecast display fns
+const displayDailyForecast = (data) => {
+    if (data.forecast) {
+        let textForecast = data.forecast.txt_forecast;
+        let forecastDiv = document.getElementById("forecast");
+        let cardsDiv = document.createElement("div");
+        cardsDiv.id = "cards";
+        forecastDiv.appendChild(cardsDiv);
+        textForecast.forecastday.forEach(day => {
+            let card = getCard(day.icon_url, day.title, '', day.fcttext);
+            cardsDiv.innerHTML += card;
+        });
+    } else if (data.response.results) {
+        displayError("Please be a little more specific. Try adding a state.");
+    }
 };
-
 const displayHourlyForecast = data => {
     let forecast = data.hourly_forecast;
     let tableStart = `<table class="table"><tbody>`;
@@ -25,15 +43,15 @@ const displayHourlyForecast = data => {
     let table = tableStart;
     if (forecast) {
         forecast.forEach(hour => {
-            console.log(hour);
-            let tr = `<tr>
-                <td><img src="${hour.icon_url}"></td>
-                <td>${hour.FCTTIME.weekday_name}</td>
-                <td>${hour.FCTTIME.civil}</td>
-                <td>${hour.condition}</td>
-                <td>${hour.temp.english}&deg;F</td>
-                <td>${hour.humidity}% humidity</td>
-            </tr>`;
+            let info = [
+                `<img src="${hour.icon_url}">`,
+                hour.FCTTIME.weekday_name,
+                hour.FCTTIME.civil,
+                hour.condition,
+                hour.temp.english + "&deg; F",
+                hour.humidity + "% humidity"
+            ];
+            let tr = getTr(info);
             table += tr;
         });
         document.getElementById("forecast").innerHTML = table;
@@ -42,38 +60,15 @@ const displayHourlyForecast = data => {
     }
 };
 
-const displayThreeDayForecast = data => {
-    if (data.forecast) {
-        let textForecast = data.forecast.txt_forecast;
-        let forecastDiv = document.getElementById("forecast");
-        let cardsDiv = document.createElement("div");
-        cardsDiv.id = "cards";
-        forecastDiv.appendChild(cardsDiv);
-        textForecast.forecastday.forEach(day => {
-            let card = getCard(day.icon_url, day.title, '', day.fcttext);
-            cardsDiv.innerHTML += card;
-        });
-    } else if (data.response.results) {
-        displayError("Please be a little more specific. Try adding a state.");
-    }
+// element builders
+const getTr = (list) => {
+    let tr = `<tr>`;
+    list.forEach((item, index) => {
+        tr += `<td>${list[index]}</td>`;
+    });
+    tr += `</tr>`;
+    return tr;
 };
-
-const displayTenDayForecast = data => {
-    if (data.forecast) {
-        let textForecast = data.forecast.txt_forecast;
-        let forecastDiv = document.getElementById("forecast");
-        let cardsDiv = document.createElement("div");
-        cardsDiv.id = "cards";
-        forecastDiv.appendChild(cardsDiv);
-        textForecast.forecastday.forEach(day => {
-            let card = getCard(day.icon_url, day.title, '', day.fcttext);
-            cardsDiv.innerHTML += card;
-        });
-    } else if (data.response.results) {
-        displayError("Please be a little more specific. Try adding a state.");
-    }
-};
-
 const getCard = (img, title, subtitle, body) => {
     let card = `<div class="card">
         <div class="card-body">
@@ -86,10 +81,11 @@ const getCard = (img, title, subtitle, body) => {
     return card;
 };
 
+// display fn map
 let displayForecastTypes = {
     "hourly": displayHourlyForecast,
-    "3": displayThreeDayForecast,
-    "10": displayTenDayForecast,
+    "3": displayDailyForecast,
+    "10": displayDailyForecast,
 };
 
 module.exports = { displayError, displayForecast, hideErrors };

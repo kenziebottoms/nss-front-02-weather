@@ -13,7 +13,7 @@ const activateDropdown = () => {
             let type = event.target.dataset.type;
             if (term != "") {
                 document.getElementById("forecast").innerHTML = "";
-                weather.getForecast(type, term);
+                weather.fetchForecast(type, term);
             } else {
                 viewer.displayError("Please enter a location to search");
             }

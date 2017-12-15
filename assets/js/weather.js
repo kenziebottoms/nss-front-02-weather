@@ -3,52 +3,33 @@
 const api_key = require("./api_key");
 const viewer = require("./view");
 
-const hourlyForecast = term => {
-    return new Promise((resolve, reject) => {
-        let url = `http://api.wunderground.com/api/${api_key}/hourly/q/${term}.json`;
-        let request = new XMLHttpRequest();
-        request.open("GET", url);
-        request.onload = () => resolve(["hourly", request.responseText]);
-        request.onerror = () => reject(request.statusText);
-        request.send();
-    });
-};
-
-const threeDayForecast = term => {
-    return new Promise((resolve, reject) => {
-        let url = `http://api.wunderground.com/api/${api_key}/forecast/q/${term}.json`;
-        let request = new XMLHttpRequest();
-        request.open("GET", url);
-        request.onload = () => resolve(["3", request.responseText]);
-        request.onerror = () => reject(request.statusText);
-        request.send();
-    });
-};
-
-const tenDayForecast = term => {
-    return new Promise((resolve, reject) => {
-        let url = `http://api.wunderground.com/api/${api_key}/forecast10day/q/${term}.json`;
-        let request = new XMLHttpRequest();
-        request.open("GET", url);
-        request.onload = () => resolve(["10", request.responseText]);
-        request.onerror = () => reject(request.statusText);
-        request.send();
-    });
-};
-
-const forecastTypes = {
-    "3" : threeDayForecast,
-    "10" : tenDayForecast,
-    "hourly" : hourlyForecast,
-};
-
-const getForecast = (type, term) => {
+// smart forecast fetcher
+const fetchForecast = (type, term) => {
     viewer.hideErrors();
-    let promise = forecastTypes[type](term);
+    let promise = fetchData(term, type);
     promise.then(
         viewer.displayForecast,
         viewer.displayError
     );
 };
 
-module.exports = {getForecast};
+// fetch fns (xhr fns)
+const fetchData = (term, type) => {
+    return new Promise((resolve, reject) => {
+        let url = `http://api.wunderground.com/api/${api_key}/${forecastQueries[type]}/q/${term}.json`;
+        let request = new XMLHttpRequest();
+        request.open("GET", url);
+        request.onload = () => resolve([type, request.responseText]);
+        request.onerror = () => reject(request.statusText);
+        request.send();
+    });
+};
+
+// api query map
+const forecastQueries = {
+    "3": "forecast",
+    "10": "forecast10day",
+    "hourly": "hourly"
+};
+
+module.exports = { fetchForecast };
