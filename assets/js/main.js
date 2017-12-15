@@ -1,5 +1,5 @@
 "use strict";
 
-const weather = require("./weather");
+let weather = require("./weather");
 
-weather.getWeather("Nashville TN");
+weather.getForecast("3", "Nashville TN");
