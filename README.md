@@ -1,6 +1,23 @@
-## Whither the Weather?
+# Whither the Weather?
 
-### :white_check_mark: Use the ~~OpenWeather~~ Weather Underground API to build a weather forecast search tool
+![](https://img.shields.io/badge/data-weather_underground_api-yellow.svg)
+![](https://img.shields.io/badge/template-none-lightgrey.svg)
+![](https://img.shields.io/badge/js-jquery-blue.svg)
+![](https://img.shields.io/badge/modularity-browserify-yellow.svg)
+![](https://img.shields.io/badge/css_preprocessor-scss-ff69b4.svg)
+![](https://img.shields.io/badge/css_framework-bootstrap-5F2C7C.svg)
+![](https://img.shields.io/badge/mvp-working-brightgreen.svg)
+
+### Run Locally
+```
+> git clone git@github.com:kenziebottoms/nss-front-02-weather.git
+> npm install
+> grunt
+```
+
+### Requirements
+
+:white_check_mark: Use the ~~OpenWeather~~ Weather Underground API to build a weather forecast search tool
 
 - [x] Pick three types of forecasts to choose from.
 - [x] User inputs zipcode and selects forecast type from a dropdown.
