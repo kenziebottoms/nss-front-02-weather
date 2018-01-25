@@ -10,9 +10,9 @@
 
 ### Run Locally
 ```
-> git clone git@github.com:kenziebottoms/nss-front-02-weather.git
-> npm install
-> grunt
+git clone git@github.com:kenziebottoms/nss-front-02-weather.git
+npm install
+grunt
 ```
 
 ### Requirements
